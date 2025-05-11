@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía del Docente: IA Generativa en el Aula</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            background-color: #f4f4f9;
+        }
+        main {
+            flex: 1 0 auto;
+            padding-top: 20px; /* Space for fixed navbar */
+        }
+        .nav-wrapper {
+            background-color: #00695c; /* Teal darken-3 for USC-like feel */
+        }
+        /* Styling for navbar items and icons */
+        .nav-wrapper ul a {
+            display: flex !important; /* Ensure flex for alignment */
+            align-items: center !important; /* Vertically align icon and text */
+            padding: 0 15px; /* Standard Materialize padding for nav items */
+        }
+        .nav-wrapper ul a i {
+            font-size: 1.3rem;
+            line-height: inherit; /* Inherit line height from parent anchor */
+            margin-right: 8px; /* Space between icon and text */
+        }
+        .brand-logo img {
+            height: 40px;
+            margin-top: 8px;
+            margin-left: 15px;
+        }
+        .brand-logo i.material-icons { /* Specific styling for brand logo icon */
+            font-size: 30px !important;
+            margin-left: 15px !important;
+            margin-top: 3px !important;
+            line-height: 56px !important;
+            margin-right: 0 !important; /* Reset margin-right if not needed */
+        }
+        .brand-logo span {
+            vertical-align: top;
+            line-height: 56px;
+            margin-left:5px;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #004d40; /* Darker Teal */
+            border-bottom: 2px solid #004d40;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 15px;
+            font-size: 2.8rem;
+        }
+        .card-panel {
+            border-left: 5px solid #00796b; /* Teal darken-2 */
+        }
+        .card .card-title {
+            font-weight: 400;
+            color: #00796b; /* Teal darken-2 */
+        }
+        .card .card-action a {
+            color: #004d40 !important; /* Darker Teal for links */
+            font-weight: bold;
+        }
+        .collapsible-header {
+            font-weight: 500;
+            background-color: #e0f2f1; /* Light teal for collapsible headers */
+            border-bottom: 1px solid #b2dfdb;
+        }
+        .collapsible-header i {
+            margin-right: 10px;
+            color: #00796b;
+        }
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZWR1Y2F0aW9uJTIwdGVjaG5vbG9neXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0;
+        }
+        .hero p {
+            font-size: 1.5rem;
+        }
+        .tool-link {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            background-color: #00796b;
+            color: white !important;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .tool-link:hover {
+            background-color: #004d40;
+        }
+        .code-block {
+            background-color: #272822; /* Monokai-like background */
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .footer-logo img {
+            height: 50px;
+            opacity: 0.8;
+        }
+        .page-footer {
+            background-color: #004d40; /* Darker Teal for footer */
+        }
+        .nav-fixed { /* Ensure navbar is fixed and has appropriate z-index */
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 997; /* Materialize default for navbar is 997 */
+        }
+        /* Light green hover for navbar links */
+        nav ul a:hover {
+            background-color: #e0f2f1 !important; /* Very light teal, almost white-green */
+            color: #004d40 !important; /* Dark teal text for contrast */
+        }
+        .sidenav li > a > i.material-icons { /* Sidenav icon styling */
+             margin: 0 15px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">
+                    <i class="material-icons">school</i> 
+                    <span>Guía IA Docente</span> 
+                </a>
+                <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#introduccion"><i class="material-icons">info_outline</i>Introducción</a></li>
+                    <li><a href="#casos-de-uso"><i class="material-icons">widgets</i>Casos de Uso</a></li>
+                    <li><a href="#crear-contenido"><i class="material-icons">devices</i>Contenido Web</a></li>
+                    <li><a href="#publicar-contenido"><i class="material-icons">publish</i>Publicar</a></li>
+                    <li><a href="#prompt-engineering"><i class="material-icons">lightbulb_outline</i>Prompting</a></li>
+                    <li><a href="#etica"><i class="material-icons">gavel</i>Ética</a></li>
+                    <li><a href="#acerca-de"><i class="material-icons">assignment_ind</i>Acerca de</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <ul class="sidenav" id="mobile-nav">
+        <li><a href="#introduccion"><i class="material-icons">info_outline</i>Introducción</a></li>
+        <li><a href="#casos-de-uso"><i class="material-icons">widgets</i>Casos de Uso</a></li>
+        <li><a href="#crear-contenido"><i class="material-icons">devices</i>Crear Contenido Web</a></li>
+        <li><a href="#publicar-contenido"><i class="material-icons">publish</i>Publicar</a></li>
+        <li><a href="#prompt-engineering"><i class="material-icons">lightbulb_outline</i>Prompting</a></li>
+        <li><a href="#etica"><i class="material-icons">gavel</i>Ética</a></li>
+        <li><a href="#acerca-de"><i class="material-icons">assignment_ind</i>Acerca de</a></li>
+    </ul>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Guía del Docente: IA Generativa en el Aula</h1>
+        <p>Potenciando la enseñanza y el aprendizaje en la Educación Secundaria<br>TFM Alberto Femenías Hermida. Directora: Dra. Silvia López Gómez</p>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                    <!-- Introduction Section -->
+                    <section id="introduccion" class="section scrollspy">
+                        <h2 class="section-title"><i class="material-icons">info_outline</i>Introducción</h2>
+                        <div class="card-panel">
+                            <p>¡Bienvenido/a, docente! Esta guía está diseñada especialmente para el profesorado de Educación Secundaria Obligatoria y Bachillerato que desea explorar el potencial de la Inteligencia Artificial Generativa (IA Generativa) como herramienta de apoyo en su labor diaria.</p>
+                            <p>El objetivo es desmitificar la IA, presentar casos de uso prácticos y herramientas accesibles que pueden ayudar a optimizar tareas, crear materiales innovadores y enriquecer la experiencia de aprendizaje de sus estudiantes. No se requiere experiencia previa en IA, ¡solo curiosidad y ganas de innovar!</p>
+                            <p>Exploraremos cómo estas tecnologías pueden transformar la creación de contenido, la personalización del aprendizaje y la eficiencia administrativa, siempre con una perspectiva crítica y ética.</p>
+                            <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRlYWNoZXIlMjB0ZWNobm9sb2d5fGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="Docente usando tecnología" class="responsive-img materialboxed" style="margin-top: 15px;">
+                        </div>
+                    </section>
+
+                    <!-- Use Cases Section -->
+                    <section id="casos-de-uso" class="section scrollspy">
+                        <h2 class="section-title"><i class="material-icons">widgets</i>Casos de Uso y Herramientas</h2>
+                        <p>La IA Generativa ofrece un abanico de posibilidades para el profesorado. A continuación, se presentan algunos casos de uso comunes y herramientas destacadas:</p>
+
+                        <ul class="collapsible expandable">
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons">description</i>Generación de Textos y Materiales Didácticos</div>
+                                <div class="collapsible-body">
+                                    <p>Crear resúmenes, explicaciones de conceptos complejos, esquemas, preguntas para exámenes, enunciados de problemas, o adaptar textos a diferentes niveles de comprensión.</p>
+                                    <p><strong>Herramientas:</strong></p>
+                                    <a href="https://chat.openai.com/" target="_blank" class="tool-link">ChatGPT (OpenAI)</a>
+                                    <a href="https://gemini.google.com/" target="_blank" class="tool-link">Gemini (Google)</a>
+                                    <a href="https://claude.ai/" target="_blank" class="tool-link">Claude (Anthropic)</a>
+                                    <a href="https://copilot.microsoft.com/" target="_blank" class="tool-link">Microsoft Copilot</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons">image</i>Creación de Contenido Visual</div>
+                                <div class="collapsible-body">
+                                    <p>Generar imágenes para presentaciones, fichas de trabajo, ilustraciones para conceptos abstractos, o portadas para proyectos.</p>
+                                    <p><strong>Herramientas:</strong></p>
+                                    <a href="https://openai.com/dall-e-3" target="_blank" class="tool-link">DALL·E 3 (OpenAI)</a>
+                                    <a href="https://www.midjourney.com/" target="_blank" class="tool-link">Midjourney</a>
+                                    <a href="https://stablediffusion.com/" target="_blank" class="tool-link">Stable Diffusion</a>
+                                    <a href="https://www.canva.com/ai-image-generator/" target="_blank" class="tool-link">Canva Magic Media</a>
+                                    <a href="https://ideogram.ai/" target="_blank" class="tool-link">Ideogram AI</a>
+                                    <a href="https://firefly.adobe.com/" target="_blank" class="tool-link">Adobe Firefly</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons">mic</i>Generación y Procesamiento de Audio</div>
+                                <div class="collapsible-body">
+                                    <p>Convertir texto a voz para audiolibros o materiales accesibles, transcribir audio de clases grabadas, o incluso generar música sencilla para proyectos.</p>
+                                    <p><strong>Herramientas (Texto a Voz y Voz a Texto):</strong></p>
+                                    <a href="https://elevenlabs.io/" target="_blank" class="tool-link">ElevenLabs</a>
+                                    <a href="https://openai.com/whisper" target="_blank" class="tool-link">OpenAI Whisper (STT)</a>
+                                    <a href="https://otter.ai/" target="_blank" class="tool-link">Otter.ai (Transcripción)</a>
+                                    <p><strong>Herramientas (Música):</strong></p>
+                                    <a href="https://suno.com/" target="_blank" class="tool-link">Suno AI</a>
+                                    <a href="https://www.udio.com/" target="_blank" class="tool-link">Udio</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons">assessment</i>Apoyo en la Evaluación y Feedback</div>
+                                <div class="collapsible-body">
+                                    <p>Diseñar rúbricas, generar borradores de comentarios de retroalimentación (siempre con supervisión humana), o crear bancos de preguntas variadas.</p>
+                                    <p><strong>Herramientas (principalmente LLMs):</strong></p>
+                                    <a href="https://chat.openai.com/" target="_blank" class="tool-link">ChatGPT</a>
+                                    <a href="https://gemini.google.com/" target="_blank" class="tool-link">Gemini</a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="collapsible-header"><i class="material-icons">code</i>Creación de Código y Herramientas Interactivas</div>
+                                <div class="collapsible-body">
+                                    <p>Generar fragmentos de código para pequeñas herramientas educativas, simulaciones simples, o ayudar en la enseñanza de programación. (Ver sección "Crear Contenido Web con IA").</p>
+                                    <p><strong>Herramientas (LLMs y específicas):</strong></p>
+                                    <a href="https://gemini.google.com/" target="_blank" class="tool-link">Gemini (bueno para código)</a>
+                                    <a href="https://github.com/features/copilot" target="_blank" class="tool-link">GitHub Copilot</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- Create Web Content Section -->
+                    <section id="crear-contenido" class="section scrollspy">
+                        <h2 class="section-title"><i class="material-icons">devices</i>Crear Contenido Web con IA</h2>
+                        <div class="card-panel">
+                            <p>Los Modelos de Lenguaje Extensos (LLM) como <a href="https://gemini.google.com/" target="_blank">Gemini 2.5 Pro</a>, ChatGPT-4, o Claude pueden generar código HTML, CSS y JavaScript a partir de descripciones en lenguaje natural (prompts). Esto abre la puerta a la creación de:</p>
+                            <ul>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">chevron_right</i>Páginas web sencillas con contenido multimedia.</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">chevron_right</i>Laboratorios virtuales básicos (ej. simulación de un péndulo, circuito simple).</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">chevron_right</i>Juegos educativos (ej. quiz interactivo, juego de emparejar conceptos).</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">chevron_right</i>Ejercicios de refuerzo interactivos.</li>
+                            </ul>
+                            <p><strong>¿Cómo funciona?</strong></p>
+                            <ol>
+                                <li><strong>Define tu idea:</strong> ¿Qué quieres crear? ¿Cuál es el objetivo pedagógico?</li>
+                                <li><strong>Elabora el prompt:</strong> Sé lo más específico posible. Describe la funcionalidad, el diseño deseado, los elementos que debe incluir.
+                                    <div class="code-block">
+                                        <pre>
+Ejemplo de prompt para Gemini:
+"Genera el código HTML, CSS y JavaScript para una página web que presente un quiz interactivo sobre el sistema solar para estudiantes de 1º de ESO.
+Debe tener 5 preguntas de opción múltiple.
+Al final, debe mostrar la puntuación obtenida.
+Usa un diseño visualmente atractivo con temática espacial."
+                                        </pre>
+                                    </div>
+                                </li>
+                                <li><strong>Itera y refina:</strong> La IA te dará un primer borrador. Es probable que necesites pedirle ajustes:
+                                    <ul>
+                                        <li>"Cambia los colores a tonos azules y morados."</li>
+                                        <li>"Añade una imagen de fondo del espacio."</li>
+                                        <li>"Haz que las opciones de respuesta se mezclen aleatoriamente."</li>
+                                        <li>"Corrige este error en la función de validación..."</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Revisa y prueba:</strong> Copia el código generado en un editor de texto (como VS Code, Notepad++), guárdalo como un archivo `.html` y ábrelo en un navegador. Prueba todas las funcionalidades.</li>
+                            </ol>
+                            <p><strong>Consejo:</strong> Empieza con proyectos sencillos y ve aumentando la complejidad. La IA es una asistente, pero tu criterio pedagógico y tu revisión son fundamentales.</p>
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y29kaW5nfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60" alt="Código en una pantalla" class="responsive-img materialboxed" style="margin-top: 15px;">
+                        
+                            <h3 style="color: #00695c; margin-top: 30px; border-top: 1px solid #b2dfdb; padding-top:20px;">
+                                <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">play_circle_filled</i>Casos Prácticos de Creación Web con IA
+                            </h3>
+                            <p>A continuación, se presentan algunos ejemplos de contenido web interactivo generado completamente a partir de prompts (instrucciones) dados a diferentes modelos de Inteligencia Artificial generativa. Estos casos ilustran cómo, con la instrucción adecuada, la IA puede asistir en la creación rápida de herramientas educativas.</p>
+                    
+                            <h4><i class="material-icons tiny" style="vertical-align: middle;">videogame_asset</i> Caso 1: Juego Educativo de Vocabulario de Inglés</h4>
+                            <p>Este juego interactivo fue creado para practicar vocabulario en inglés. El usuario puede seleccionar un tema y luego debe emparejar palabras en inglés con su traducción al español. Incluye puntuación y temporizador.</p>
+                            <p><strong>Enlace al juego:</strong> <a href="https://albertofemenias.github.io/ai-example-1/" target="_blank" class="tool-link">Juego de Vocabulario Inglés</a></p>
+                            <p><strong>Prompt utilizado (para Google Gemini):</strong></p>
+                            <div class="code-block">
+                                <pre>
+Hola, me gustaría solicitar la creación de una página web para un juego de vocabulario.
+
+Las características principales que necesito son:
+
+1.  Un juego interactivo donde aparezcan pares de palabras (inglés/español).
+2.  La posibilidad de incluir conjuntos de vocabulario predefinidos directamente en el código HTML (sin archivos JSON externos), con al menos 50 pares de palabras por conjunto. Me interesan temas de nivel B2, como negocios, medio ambiente y salud.
+3.  Una pantalla de inicio donde el usuario pueda seleccionar el tema de vocabulario antes de empezar a jugar.
+4.  El juego debe ser completamente responsive, adaptable a diferentes tamaños de pantalla (escritorio y móvil).
+5.  Debe ser jugable tanto con teclado (en escritorio) como con botones táctiles en pantalla (en smartphones). Los botones táctiles solo deben ser visibles en dispositivos móviles.
+6.  El área de juego (canvas) debe escalar correctamente y mantener una proporción adecuada en cualquier tamaño de pantalla, evitando que los elementos se vean deformados.
+7.  Debe incluir un sistema de puntuación, un temporizador y una lista de puntuaciones altas (guardadas localmente, por ejemplo).
+8.  Al finalizar la partida, se debe mostrar la puntuación final y la opción de guardar la puntuación alta si corresponde.
+9.  El diseño general debe ser limpio y funcional, similar a una interfaz de terminal o retro.
+
+¿Podrías crear el código HTML completo (con CSS y JavaScript integrados) para esta página web?
+                                </pre>
+                            </div>
+                    
+                            <h4><i class="material-icons tiny" style="vertical-align: middle;">functions</i> Caso 2: Quiz Educativo de Funciones Matemáticas</h4>
+                            <p>Este quiz permite a los estudiantes identificar fórmulas matemáticas a partir de sus representaciones gráficas. Se muestran varias opciones y el estudiante debe elegir la correcta. El juego grafica la opción del estudiante para comparación.</p>
+                            <p><strong>Enlace al quiz:</strong> <a href="https://albertofemenias.github.io/ai-example-2/" target="_blank" class="tool-link">Quiz de Funciones Matemáticas</a></p>
+                            <p><strong>Prompt utilizado (para ChatGPT):</strong></p>
+                            <div class="code-block">
+                                <pre>
+¡Hola! Necesito tu ayuda para crear un juego web llamado "Adivina la Fórmula", todo en español. Sería un juego para que los estudiantes practiquen identificando fórmulas matemáticas a partir de sus gráficos.
+
+La idea general es:
+
+Inicio fácil: Una pantalla para que elijan qué tipos de fórmulas quieren y cuántas preguntas. Y un botón para "Empezar".
+
+Al jugar:
+  - Se muestra un gráfico misterioso (en azul).
+  - Al lado, 5 botones con posibles fórmulas. El estudiante elige una.
+  - Al confirmar, el juego dice si es "¡Correcto!" o "Incorrecto" (mostrando la respuesta buena si falló). También, que se dibuje la fórmula elegida por el estudiante (en rojo) sobre el mismo gráfico, para que pueda comparar.
+  - Arriba se vería el número de pregunta y la puntuación. Luego, un botón para "Siguiente".
+
+Final del juego: 
+  - Un mensaje de "¡Juego Terminado!", la puntuación final y un botón para "Jugar de Nuevo".
+
+Tipos de fórmulas: 
+  - Que haya variedad, como líneas rectas (y=ax+b), parábolas (y=ax²+k), con forma de V (y=a|x|+k), raíces (y=a√x+k), exponenciales, logarítmicas y ondas (trigonométricas como y=asen(bx)+d). Lo importante es que sean fórmulas sencillas, más o menos con un solo número que sume o reste al final.
+
+Dibujo de los Gráficos:
+  - Que los ejes X e Y se ajusten solos para que el gráfico siempre se vea bien.
+  - Que las unidades en el eje X y en el eje Y se vean del mismo tamaño (que la escala sea "cuadrada").
+  - Que los ejes tengan sus rayitas y números. Los números del eje X, que aparezcan justo debajo de la línea del eje.
+
+Si es posible, que todo el juego (código, estilos, todo) esté en un solo archivo HTML.
+                                </pre>
+                            </div>
+                    
+                            <h4><i class="material-icons tiny" style="vertical-align: middle;">device_hub</i> Caso 3: Simulador de Plano Inclinado (Física)</h4>
+                            <p>Una simulación interactiva de un plano inclinado donde los estudiantes pueden ajustar parámetros como el ángulo, la masa, la fricción y la gravedad para observar el comportamiento de un bloque. Muestra fuerzas, aceleración y velocidad.</p>
+                            <p><strong>Enlace al simulador:</strong> <a href="https://albertofemenias.github.io/ai-example-3/" target="_blank" class="tool-link">Simulador Plano Inclinado</a></p>
+                            <p><strong>Prompt utilizado (para Grok AI):</strong></p>
+                            <div class="code-block">
+                                <pre>
+Hola, ¿podrías ayudarme a crear una página web interactiva para mis clases de física? Me gustaría una simulación de un 'Plano Inclinado' que mis alumnos puedan usar para experimentar y entender mejor los conceptos.
+
+Esto es lo que necesitaría que hiciera la página:
+
+1.  En español: Que se llame, por ejemplo, "Simulador Interactivo de Plano Inclinado" y que todo el texto que vean los usuarios esté en español.
+2.  Diseño de pantalla:
+    * A la izquierda, un área grande donde se vea el dibujo del plano inclinado y el bloque.
+    * Justo debajo de este dibujo, que estén los controles principales de la simulación: un cronómetro y los botones para "Iniciar", "Pausar" y "Reiniciar" la animación.
+    * A la derecha de la pantalla, que estén las barritas para cambiar los valores y la lista con los resultados de los cálculos.
+3.  Un dibujo que se mueva:
+    * En el área de simulación, se debería ver un plano inclinado (como una rampa) y un bloque encima.
+    * Los alumnos deberían poder cambiar आसानी से usando barritas deslizables (en el panel derecho):
+        * El ángulo de inclinación de la rampa.
+        * La masa del bloque.
+        * El coeficiente de fricción entre el bloque y la rampa.
+        * La fuerza de la gravedad.
+4.  Movimiento realista: Lo más importante es que el bloque se mueva (o se quede quieto) en la rampa tal como lo haría en la vida real, obedeciendo las leyes de la física con los valores que hayan puesto los alumnos.
+5.  Información a la vista: Mientras el bloque se mueve o está quieto, me gustaría que la página muestre claramente:
+    * Las fuerzas que actúan sobre él: su peso, la fuerza normal, la fuerza de fricción y la fuerza total (neta). Sería genial si estas fuerzas se vieran como flechas en el dibujo del bloque.
+    * La aceleración que tiene el bloque.
+    * La velocidad que lleva en cada instante (que también se dibuje una flecha de velocidad saliendo del bloque en el dibujo).
+    * El espacio (o distancia) que ha recorrido por la rampa. Para ayudar a verlo, quizás una pequeña marca en el plano que indique desde dónde empezó a moverse el bloque.
+6.  Sencillo de compartir: Lo ideal sería que toda la simulación esté en una única página web.
+
+En resumen, busco una herramienta visual y práctica para que mis estudiantes puedan "jugar" con la física de un plano inclinado.
+                                </pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Publish Content Section -->
+                    <section id="publicar-contenido" class="section scrollspy">
+                        <h2 class="section-title"><i class="material-icons">publish</i>Publicar Contenido Web</h2>
+                        <div class="card-panel">
+                            <p>Una vez que tienes tu archivo HTML (y posiblemente archivos CSS y JS separados), hay varias formas de publicarlo:</p>
+                            <ul class="collapsible">
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons">cloud_upload</i>GitHub Pages (Recomendado para facilidad)</div>
+                                    <div class="collapsible-body">
+                                        <p><a href="https://pages.github.com/" target="_blank">GitHub Pages</a> es un servicio gratuito que te permite alojar sitios web estáticos directamente desde un repositorio de GitHub.</p>
+                                        <ol>
+                                            <li>Crea una cuenta gratuita en <a href="https://github.com/" target="_blank">GitHub</a>.</li>
+                                            <li>Crea un nuevo repositorio público (ej. "mi-quiz-solar").</li>
+                                            <li>Sube tu archivo `index.html` (y cualquier otro archivo CSS/JS/imagen) al repositorio.</li>
+                                            <li>Ve a la pestaña "Settings" (Configuración) del repositorio.</li>
+                                            <li>En la sección "Pages" (Páginas) del menú lateral, selecciona la rama `main` (o `master`) como fuente y haz clic en "Save".</li>
+                                            <li>GitHub te proporcionará una URL como `https://TUNOMBREDEUSUARIO.github.io/NOMBRE-DEL-REPOSITORIO/`.</li>
+                                        </ol>
+                                        <p>Es ideal para compartir recursos con estudiantes o colegas fácilmente.</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons">dvr</i>Servidor Local del Centro o Aula Virtual</div>
+                                    <div class="collapsible-body">
+                                        <p>Si tu centro educativo dispone de un servidor web o un aula virtual (como Moodle) que permite subir archivos HTML, esta es otra opción.</p>
+                                        <ul>
+                                            <li><strong>Servidor Local:</strong> Simplemente copia el archivo `.html` (y carpetas asociadas si las hay) en la carpeta designada del servidor web del centro. Consulta con el departamento de informática.</li>
+                                            <li><strong>Moodle u otras plataformas:</strong> Muchas plataformas permiten incrustar contenido HTML o subir paquetes de contenido. Moodle, por ejemplo, permite añadir un "Recurso de tipo Archivo" y subir el HTML, o un "Paquete de contenido IMS" si es más complejo. Algunos editores de Moodle permiten pegar código HTML directamente.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                 <li>
+                                    <div class="collapsible-header"><i class="material-icons">computer</i>Ejecución Local (Para pruebas o uso individual)</div>
+                                    <div class="collapsible-body">
+                                        <p>Para probar tu creación o para uso en un solo ordenador sin conexión a internet, simplemente puedes:</p>
+                                        <ol>
+                                            <li>Guardar tu archivo como `nombre_del_archivo.html` en tu ordenador.</li>
+                                            <li>Hacer doble clic en el archivo. Se abrirá en tu navegador web predeterminado.</li>
+                                        </ol>
+                                        <p>Esto no lo hace accesible a otros, pero es útil para el desarrollo y pruebas rápidas.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                    <!-- Prompt Engineering Basics -->
+                    <section id="prompt-engineering" class="section scrollspy">
+                        <h2 class="section-title"><i class="material-icons">lightbulb_outline</i>Guía Básica de "Prompting"</h2>
+                        <div class="card-panel">
+                            <p>La calidad de los resultados de una IA Generativa depende en gran medida de la calidad de tus "prompts" (las instrucciones que le das). Aquí algunos consejos:</p>
+                            <ul>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">check_circle</i> <strong>Sé específico y claro:</strong> Evita la ambigüedad. Cuantos más detalles proporciones, mejor.</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">check_circle</i> <strong>Define el rol:</strong> "Actúa como un profesor de física de secundaria..."</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">check_circle</i> <strong>Especifica el formato de salida:</strong> "¿Puedes darme la respuesta en formato de lista?", "Genera una tabla con dos columnas...", "Escribe el código en HTML".</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">check_circle</i> <strong>Proporciona contexto:</strong> Si es sobre un tema específico, menciona el nivel educativo, los conocimientos previos de los alumnos, etc.</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">check_circle</i> <strong>Pide ejemplos o analogías:</strong> "Explica la fotosíntesis con una analogía simple."</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">check_circle</i> <strong>Itera:</strong> No esperes el resultado perfecto a la primera. Refina tu prompt basándote en la respuesta inicial. Pide modificaciones.</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">check_circle</i> <strong>Establece restricciones:</strong> "No uses jerga técnica", "La respuesta no debe exceder las 100 palabras."</li>
+                                <li><i class="material-icons tiny" style="vertical-align: middle;">check_circle</i> <strong>Divide tareas complejas:</strong> Si quieres un plan de lección completo, pídelo por partes: primero objetivos, luego actividades, luego evaluación.</li>
+                            </ul>
+                            <p>Experimentar es clave. ¡No tengas miedo de probar diferentes enfoques!</p>
+                        </div>
+                    </section>
+
+                    <!-- Ethical Considerations Section -->
+                    <section id="etica" class="section scrollspy">
+                        <h2 class="section-title"><i class="material-icons">gavel</i>Consideraciones Éticas</h2>
+                        <div class="card-panel">
+                            <p>El uso de la IA Generativa en la educación conlleva responsabilidades. Es crucial ser consciente de:</p>
+                            <ul>
+                                <li><strong>Sesgos (Bias):</strong> Las IA se entrenan con grandes cantidades de datos que pueden contener sesgos sociales, culturales o de género. Estos sesgos pueden reflejarse en los contenidos generados. Es vital revisar críticamente los resultados.</li>
+                                <li><strong>Privacidad y Protección de Datos:</strong> Ten cuidado con la información personal (tuya o de tus alumnos) que introduces en las herramientas de IA, especialmente en versiones gratuitas. Lee las políticas de privacidad.</li>
+                                <li><strong>Originalidad y Plagio:</strong> Fomenta el uso ético de la IA. Enseña a los estudiantes a citar fuentes y a no presentar el trabajo de la IA como propio sin más. Utiliza la IA como una herramienta de apoyo, no como un sustituto del pensamiento crítico y la creación original.</li>
+                                <li><strong>Dependencia y Habilidades Humanas:</strong> Evita una dependencia excesiva. La IA debe complementar, no reemplazar, el desarrollo de habilidades fundamentales como la escritura, la investigación y el pensamiento crítico.</li>
+                                <li><strong>Brecha Digital:</strong> No todos los estudiantes ni centros tienen el mismo acceso a la tecnología. Considera la equidad al integrar estas herramientas.</li>
+                                <li><strong>Coste Energético y Ambiental:</strong> El entrenamiento y uso de modelos de IA a gran escala consume una cantidad significativa de energía.</li>
+                            </ul>
+                            <p><strong>Recursos relevantes:</strong></p>
+                            <a href="https://www.unesco.org/en/artificial-intelligence/ethics" target="_blank" class="tool-link">UNESCO - Ética de la IA</a>
+                            <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" class="tool-link">EU AI Act</a>
+                            <p>La reflexión continua y el diálogo con colegas y estudiantes son fundamentales para una integración responsable de la IA.</p>
+                        </div>
+                    </section>
+
+                    <!-- About Section -->
+                    <section id="acerca-de" class="section scrollspy">
+                        <h2 class="section-title"><i class="material-icons">assignment_ind</i>Acerca de esta Guía</h2>
+                        <div class="card-panel">
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Logotype_of_Universidade_de_Santiago_de_Compostela.svg/308px-Logotype_of_Universidade_de_Santiago_de_Compostela.svg.png" alt="USC Logo" style="max-width: 150px; height: auto;">
+                            </div>
+                            <p><strong>Máster Universitario en Profesorado de Educación Secundaria Obligatoria y Bachillerato, Formación Profesional y Enseñanza de Lenguas.</strong></p>
+                            <p style="margin-left: 20px;"><em>Itinerario en Ciencias Experimentales</em></p>
+                            <hr style="border-top: 1px solid #eee; margin: 20px 0;">
+                            <p style="font-size: 1.2em;"><strong>Trabajo de fin de máster</strong></p>
+                            <p>Uso de herramientas de IA generativas como asistentes para el profesorado de educación secundaria.</p>
+                            <p><em>Uso de ferramentas de IA xerativas como asistentes para o profesorado de educación secundaria.</em></p>
+                            <p><em>Use of generative AI tools as assistants for secondary education teachers.</em></p>
+                            <hr style="border-top: 1px solid #eee; margin: 20px 0;">
+                            <p><strong>Mayo de 2025</strong></p>
+                            <p><strong>Dirección:</strong> Dra. Silvia López Gómez</p>
+                            <p><strong>Autor:</strong> Alberto Femenías Hermida</p>
+                            <hr style="border-top: 1px solid #eee; margin: 20px 0;">
+                            <p style="font-size: 0.9em; color: #555;">
+                                <small>Trabajo de fin de máster presentado en la Facultad de Formación del Profesorado del Campus de Santiago de la Universidad de Santiago de Compostela para la obtención del Máster Universitario en Profesorado de Educación Secundaria Obligatoria y Bachillerato, Formación Profesional y Enseñanza de Lenguas.</small>
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Guía IA para Docentes</h5>
+                    <p class="grey-text text-lighten-4">Fomentando la innovación educativa con responsabilidad.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Enlaces Rápidos</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="#introduccion">Introducción</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#casos-de-uso">Casos de Uso</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#etica">Ética</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#acerca-de">Acerca de</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2024 Guía creada con fines educativos. Adaptado de TFM de Alberto Femenías Hermida (USC).
+                <a class="grey-text text-lighten-4 right" href="https://www.usc.gal/" target="_blank">USC</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var sidenavs = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(sidenavs);
+
+            var collapsibles = document.querySelectorAll('.collapsible');
+            M.Collapsible.init(collapsibles, { accordion: false });
+
+            var materialboxes = document.querySelectorAll('.materialboxed');
+            M.Materialbox.init(materialboxes);
+
+            var scrollspies = document.querySelectorAll('.scrollspy');
+            var navBar = document.querySelector('.navbar-fixed nav');
+            var scrollSpyOptions = {
+                scrollOffset: navBar ? navBar.offsetHeight : 64, 
+                throttle: 100 
+            };
+            M.ScrollSpy.init(scrollspies, scrollSpyOptions);
+            
+            function smoothScrollToTarget(targetId, SidenavInstance) {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navbarHeight = navBar ? navBar.offsetHeight : 64;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+
+                    if (SidenavInstance && SidenavInstance.isOpen) {
+                        SidenavInstance.close();
+                    }
+                }
+            }
+
+            document.querySelectorAll('.nav-wrapper ul a, .sidenav a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const SidenavInstance = M.Sidenav.getInstance(document.querySelector('#mobile-nav'));
+                        smoothScrollToTarget(href, SidenavInstance);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
